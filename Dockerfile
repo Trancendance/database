@@ -23,8 +23,11 @@ COPY backend ./backend
 COPY data ./data
 COPY schema.sql ./
 
+# Crear carpeta data si no existe
+RUN mkdir -p data
+
 # Exponer el puerto de la API
 EXPOSE 3000
 
 # Ejecutar el servidor DB
-CMD ["node", "backend/db_server.js"]
+CMD ["node", "backend/src/microservices/api/server.js"]
