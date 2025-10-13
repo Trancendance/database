@@ -20,8 +20,8 @@ RUN cd backend && npm install && npm rebuild better-sqlite3
 
 # Copiar el resto del backend y los datos
 COPY backend ./backend
+COPY backend/certs ./backend/certs
 COPY data ./data
-# COPY schema.sql ./
 
 # Crear carpeta data si no existe
 RUN mkdir -p data
