@@ -14,6 +14,7 @@ WORKDIR /usr/src/app
 
 # Copiar solo package.json primero (para cachear la instalación de dependencias)
 COPY backend/package*.json ./backend/
+COPY backend/tsconfig.json ./backend/
 
 # Instalar dependencias
 RUN cd backend && npm install && npm rebuild better-sqlite3
@@ -23,6 +24,7 @@ COPY backend ./backend
 COPY backend/certs ./backend/certs
 COPY data ./data
 
+
 # Crear carpeta data si no existe
 RUN mkdir -p data
 
@@ -30,4 +32,4 @@ RUN mkdir -p data
 EXPOSE 3000
 
 # Ejecutar el servidor DB
-CMD ["node", "backend/src/microservices/api/server.js"]
+CMD ["npx", "tsx", "backend/src/microservices/api/server.ts"]
