@@ -12,18 +12,16 @@ RUN apt-get update && apt-get install -y \
 # Establecer el directorio de trabajo
 WORKDIR /usr/src/app
 
-# Copiar solo package.json primero (para cachear la instalación de dependencias)
-COPY backend/package*.json ./backend/
-COPY backend/tsconfig.json ./backend/
+
+COPY backend/. .
 
 # Instalar dependencias
-RUN cd backend && npm install && npm rebuild better-sqlite3
+RUN npm install
 
-# Copiar el resto del backend y los datos
-COPY backend ./backend
-COPY backend/certs ./backend/certs
-COPY data ./data
+RUN npm run build
 
+
+# COPY src/microservices/schema.sql dist/microservices/schema.sql
 
 # Crear carpeta data si no existe
 RUN mkdir -p data
@@ -32,4 +30,4 @@ RUN mkdir -p data
 EXPOSE 3000
 
 # Ejecutar el servidor DB
-CMD ["npx", "tsx", "backend/src/microservices/api/server.ts"]
+CMD ["sh", "-c", "node dist/microservices/api/server.js & wait"]
