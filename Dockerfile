@@ -12,7 +12,6 @@ RUN apt-get update && apt-get install -y \
 # Establecer el directorio de trabajo
 WORKDIR /usr/src/app
 
-
 COPY backend/. .
 
 # Instalar dependencias
@@ -23,10 +22,12 @@ RUN npm run build
 RUN cp src/microservices/schema.sql dist/microservices/schema.sql
 
 # Crear carpeta data si no existe
-RUN mkdir -p data
+RUN mkdir -p /usr/src/app/data
 
 # Exponer el puerto de la API
 EXPOSE 3000
 
+ENV NODE_ENV=development
+
 # Ejecutar el servidor DB
-CMD ["sh", "-c", "node dist/microservices/api/server.js & wait"]
+CMD ["node", "dist/microservices/api/server.js"]
