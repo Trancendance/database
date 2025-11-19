@@ -35,8 +35,8 @@
 FROM transcendence-base
 WORKDIR /usr/src/app
 COPY backend/. .
-# RUN npm install
-# RUN npm run build
+RUN npm install
+RUN npm run build
 RUN cp src/microservices/schema.sql dist/microservices/schema.sql
 EXPOSE 3000
 ENV NODE_ENV=development
